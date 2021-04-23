@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UserSeeder::class);
+         $this->call(AirlineSeeder::class);
+        $this->call(AirportSeeder::class);
+        $this->call(FlightSeeder::class);
     }
 }

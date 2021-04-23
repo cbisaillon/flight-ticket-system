@@ -5,4 +5,6 @@ In this project, I am doing a flight ticket system.
 1. Install composer dependencies: `composer install`
 1. Install node dependencies: `npm install`
 1. Generate keys: `php artisan key:generate`
+1. Run the migrations: `php artisan migrate`
+1. Seed the database: `php artisan db:seed`
 1. Run the server: `php artisan serve`
