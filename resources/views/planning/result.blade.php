@@ -14,7 +14,7 @@
                     <input type="hidden" name="departure_date" value="{{ $result["departure"]["departure_date"] }}" />
                     @if ($result["return"])
                         <input type="hidden" name="return_flight_id" value="{{ $result["return"]["flight_id"] }}"/>
-                        <input type="hidden" name="return_date" value="{{ $result["return"]["departure_date"] }}" />
+                        <input type="hidden" name="return_date" value="{{ $result["return"]["arrival_date"] }}" />
                     @endif
 
                     <button class="btn btn-success">{{__("Buy before its too late !")}}</button>

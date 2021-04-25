@@ -23,7 +23,11 @@ class TripController extends Controller
      * @param Request $request
      */
     public function index(Request $request) {
-        return view("trips.index");
+        $trips = Auth::user()->trips()
+            ->orderBy("departure_date", "ASC")
+            ->paginate(2);
+
+        return view("trips.index", compact("trips"));
     }
 
     /**
@@ -75,7 +79,9 @@ class TripController extends Controller
      * @param Request $request
      * @param Trip $trip
      */
-    public function cancel(Request $request, Trip $trip) {
-
+    public function delete(Request $request, Trip $trip) {
+        $this->authorize("delete", $trip);
+        $trip->delete();
+        return redirect()->back();
     }
 }

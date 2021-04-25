@@ -105,8 +105,8 @@ class SearchResultHelper
                             "flight_id" => $return->id,
                             "origin_airport" => $return->departureAirport,
                             "arrival_airport" => $return->arrivalAirport,
-                            "departure_date" => $this->returnDate->copy()->setTimeFrom($departure->departure_time)->format("Y-m-d H:i:s"),
-                            "arrival_date" => $this->returnDate->copy()->setTimeFrom($departure->arrival_time)->format("Y-m-d H:i:s")
+                            "departure_date" => $this->returnDate->copy()->setTimeFrom($return->departure_time)->format("Y-m-d H:i:s"),
+                            "arrival_date" => $this->returnDate->copy()->setTimeFrom($return->arrival_time)->format("Y-m-d H:i:s")
                         ],
                         "total_cost" => $departure->price + $return->price
                     ];
