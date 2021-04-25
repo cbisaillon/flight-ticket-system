@@ -13,3 +13,12 @@ In this project, I am doing a flight ticket system.
 1. Seed the database: `php artisan db:seed`
 1. Compile the style and javascript: `npm run dev`
 1. Run the server: `php artisan serve`
+
+## Testing
+
+### Users
+
+|email| password |
+|-------|----------|
+|customer1@email.com|test1234|
+|customer2@email.com|test1234|
