@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="FlightSearchResultTest.testFetchInvalidReturnDate" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+    <CommandLine>
+      <PhpTestInterpreterSettings>
+        <option name="interpreterName" value="PHP 7.2" />
+      </PhpTestInterpreterSettings>
+    </CommandLine>
+    <TestRunner class="FlightSearchResultTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Unit/FlightSearchResultTest.php" method="testFetchInvalidReturnDate" scope="Method" />
+    <method v="2" />
+  </configuration>
+</component>
