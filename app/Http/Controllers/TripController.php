@@ -4,8 +4,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Flight;
 use App\Models\Trip;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Controller for the user to manage their trips
@@ -29,7 +31,43 @@ class TripController extends Controller
      * @param Request $request
      */
     public function create(Request $request) {
+        $this->validate($request, [
+            "departure_flight_id" => "required|numeric|exists:flights,id",
+            "return_flight_id" => "nullable|numeric|exists:flights,id",
+            "departure_date" => "required|date|date_format:Y-m-d H:i:s",
+            "return_date" => "nullable|date|date_format:Y-m-d H:i:s"
+        ]);
 
+        $departureFlight = Flight::query()
+            ->where("id", $request->get("departure_flight_id"))
+            ->firstOrFail();
+        $totalCost = $departureFlight->price;
+
+        if ($request->has("return_flight_id")) {
+            $returnFlight = Flight::query()
+                ->where("id", $request->get("return_flight_id"))
+                ->firstOrFail();
+            $totalCost += $returnFlight->price;
+        }
+
+        // Create the trip
+        $trip = new Trip([
+            "user_id" => Auth::user()->id,
+            "departure_date" => $request->get("departure_date"),
+            "return_date" => $request->get("return_date"),
+            "total_cost" => $totalCost
+        ]);
+
+        $trip->save();
+
+        // Associate the flights
+        $trip->flights()->attach($departureFlight->id);
+
+        if (isset($returnFlight)) {
+            $trip->flights()->attach($returnFlight->id);
+        }
+
+        return redirect(route("trips.index"));
     }
 
     /**

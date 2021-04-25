@@ -6,3 +6,23 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+.search-results {
+  .result {
+    padding:1rem;
+    .result-header {
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom:1px solid #4a4a4a;
+      padding-bottom:1rem;
+      margin-bottom:1rem;
+
+      .price {
+        font-size:1.5em;
+        margin:0;
+      }
+    }
+  }
+}

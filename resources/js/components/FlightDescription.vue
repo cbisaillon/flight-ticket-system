@@ -1,16 +1,15 @@
 <template>
   <div>
-    asdf
     <table>
       <!-- From -->
       <tr>
-        <td>{{ flight.departure.departure_date }}</td>
-        <td>{{ flight.departure.origin_airport.city }} ({{ flight.departure.origin_airport.code }})</td>
+        <td>{{ flight.departure_date }}</td>
+        <td><b>{{ flight.origin_airport.city }} ({{ flight.origin_airport.code }})</b></td>
       </tr>
       <!-- To -->
       <tr>
-        <td>{{ flight.departure.arrival_date }}</td>
-        <td>{{ flight.departure.arrival_airport.city }} ({{ flight.departure.arrival_airport.code }})</td>
+        <td>{{ flight.arrival_date }}</td>
+        <td><b>{{ flight.arrival_airport.city }} ({{ flight.arrival_airport.code }})</b></td>
       </tr>
     </table>
   </div>
