@@ -57,7 +57,7 @@ class PlanningController extends Controller
         $departureDate = Carbon::parse($request->get("departure_date"));
 
         $returnDate = null;
-        if ($request->has("return_date")) {
+        if ($request->has("return_date") && !empty($request->get("return_date"))) {
             $returnDate = Carbon::parse($request->get("return_date"));
         }
 

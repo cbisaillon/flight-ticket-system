@@ -50,8 +50,11 @@ class SearchResultHelper
      * @return array
      */
     public function fetchResults(): array {
+        error_log($this->returnDate);
         // Make sure parameters are good
-        if ($this->returnDate !== null && $this->returnDate->lessThan($this->departureDate)) {
+        if ($this->returnDate !== null &&
+            $this->returnDate->lessThan($this->departureDate)) {
+            error_log("wrong return date");
             throw new InvalidParameters("returnDate");
         }
 
