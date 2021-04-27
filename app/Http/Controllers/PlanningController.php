@@ -61,7 +61,7 @@ class PlanningController extends Controller
             return redirect()->back();
         }
 
-        if ($departureDate->lessThan(Carbon::now())) {
+        if ($departureDate->lessThan(Carbon::now()->startOfDay())) {
             Session::flash("error", "Departure date must be greater than now !");
             return redirect()->back();
         }
