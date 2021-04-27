@@ -63,6 +63,7 @@ class SearchResultHelper
         $flightsDeparture = Flight::query()
             ->where("departure_airport_id", $this->from->id)
             ->where("arrival_airport_id", $this->to->id)
+            ->orderBy("price", "ASC")
             ->get();
 
         // Find possible returns
@@ -71,6 +72,7 @@ class SearchResultHelper
             $flightsReturn = Flight::query()
                 ->where("departure_airport_id", $this->to->id)
                 ->where("arrival_airport_id", $this->from->id)
+                ->orderBy("price", "ASC")
                 ->get();
         }
 
@@ -85,7 +87,8 @@ class SearchResultHelper
                         "origin_airport" => $departure->departureAirport,
                         "arrival_airport" => $departure->arrivalAirport,
                         "departure_date" => $this->departureDate->copy()->setTimeFrom($departure->departure_time)->format("Y-m-d H:i:s"),
-                        "arrival_date" => $this->departureDate->copy()->setTimeFrom($departure->arrival_time)->format("Y-m-d H:i:s")
+                        "arrival_date" => $this->departureDate->copy()->setTimeFrom($departure->arrival_time)->format("Y-m-d H:i:s"),
+                        "airline" => $departure->airline
                     ],
                     "return" => null,
                     "total_cost" => $departure->price
@@ -99,14 +102,16 @@ class SearchResultHelper
                             "origin_airport" => $departure->departureAirport,
                             "arrival_airport" => $departure->arrivalAirport,
                             "departure_date" => $this->departureDate->copy()->setTimeFrom($departure->departure_time)->format("Y-m-d H:i:s"),
-                            "arrival_date" => $this->departureDate->copy()->setTimeFrom($departure->arrival_time)->format("Y-m-d H:i:s")
+                            "arrival_date" => $this->departureDate->copy()->setTimeFrom($departure->arrival_time)->format("Y-m-d H:i:s"),
+                            "airline" => $departure->airline
                         ],
                         "return" => [
                             "flight_id" => $return->id,
                             "origin_airport" => $return->departureAirport,
                             "arrival_airport" => $return->arrivalAirport,
                             "departure_date" => $this->returnDate->copy()->setTimeFrom($return->departure_time)->format("Y-m-d H:i:s"),
-                            "arrival_date" => $this->returnDate->copy()->setTimeFrom($return->arrival_time)->format("Y-m-d H:i:s")
+                            "arrival_date" => $this->returnDate->copy()->setTimeFrom($return->arrival_time)->format("Y-m-d H:i:s"),
+                            "airline" => $return->airline
                         ],
                         "total_cost" => $departure->price + $return->price
                     ];

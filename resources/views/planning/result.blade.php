@@ -5,7 +5,7 @@
 <h1>Search results</h1>
 <div class="search-results">
     @foreach ($results as $result)
-        <div class="card result">
+        <div class="card result mb-2">
             <div class="result-header">
                 <p class="price">{{ $result["total_cost"] / 100 }}$ + taxes</p>
                 <form method="post" action="{{ route("trips.create") }}">

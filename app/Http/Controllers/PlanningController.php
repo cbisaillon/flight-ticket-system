@@ -26,7 +26,13 @@ class PlanningController extends Controller
      * @param Request $request
      */
     public function index(Request $request){
-        $airports = Airport::all();
+        $airports = Airport::query()
+            ->orderBy("country_code")
+            ->orderBy("code")
+            ->has("departureFlights")
+            ->orHas("arrivalFlights")
+            ->with(["departureFlights", "arrivalFlights"])
+            ->get();
 
         return view("planning.index", compact(
             "airports"
@@ -38,8 +44,6 @@ class PlanningController extends Controller
      * @param Request $request
      */
     public function result(Request $request){
-
-
         $this->validate($request, [
            "origin" => "required|exists:airports,id",
            "destination" => "required|exists:airports,id",

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>With <b>{{ flight.airline.name }}</b></p>
     <table>
       <!-- From -->
       <tr>

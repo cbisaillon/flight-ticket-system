@@ -13,35 +13,35 @@ class FlightSeeder extends Seeder
      */
     public function run()
     {
-        $flights = [
-            [
-                "airline_id" => \App\Models\Airline::query()
-                    ->where("code", "AC")->first()->id,
-                "departure_airport_id" => \App\Models\Airport::query()
-                    ->where("code", "YUL")->first()->id,
-                "arrival_airport_id" => \App\Models\Airport::query()
-                    ->where("code", "YVR")->first()->id,
-                "number" => 301,
-                "departure_time" => "07:35",
-                "arrival_time" => "10:05",
-                "price" => 27323
-            ],
-            [
-                "airline_id" => \App\Models\Airline::query()
-                    ->where("code", "AC")->first()->id,
-                "departure_airport_id" => \App\Models\Airport::query()
-                    ->where("code", "YVR")->first()->id,
-                "arrival_airport_id" => \App\Models\Airport::query()
-                    ->where("code", "YUL")->first()->id,
-                "number" => 302,
-                "departure_time" => "11:30",
-                "arrival_time" => "19:11",
-                "price" => 22063
-            ]
-        ];
+        $faker = \Faker\Factory::create();
 
-        foreach ($flights as $flight) {
-            DB::table("flights")->insert($flight);
+        for ($i = 0 ; $i < 50 ; $i++) {
+            $airports = \App\Models\Airport::all()->random(2)->all();
+
+            for ($x = 0; $x < 4 ; $x++) {
+                // Do multiple airlines to compare prices
+                $airlineId = \App\Models\Airline::all()->random(1)->first()->id;
+                DB::table("flights")->insert([
+                    "airline_id" => $airlineId,
+                    "departure_airport_id" => $airports[0]->id,
+                    "arrival_airport_id" => $airports[1]->id,
+                    "number" => $faker->numerify("###"),
+                    "departure_time" => $faker->time(),
+                    "arrival_time" => $faker->time(),
+                    "price" => $faker->numberBetween(10000, 64000)
+                ]);
+
+                // Also insert the return flight
+                DB::table("flights")->insert([
+                    "airline_id" => $airlineId,
+                    "departure_airport_id" => $airports[1]->id,
+                    "arrival_airport_id" => $airports[0]->id,
+                    "number" => $faker->numerify("###"),
+                    "departure_time" => $faker->time(),
+                    "arrival_time" => $faker->time(),
+                    "price" => $faker->numberBetween(10000, 64000)
+                ]);
+            }
         }
     }
 }

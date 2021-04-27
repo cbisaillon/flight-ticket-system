@@ -1925,6 +1925,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "FlightDescription",
   props: {
@@ -2016,14 +2017,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     origins: function origins() {
-      return this.airports;
+      return this.airports.filter(function (airport) {
+        return airport.departure_flights.length > 0;
+      });
     },
     destinations: function destinations() {
       var _this = this;
 
-      // Can't fly from and to the same airport !!
+      if (!this.originId) {
+        return [];
+      }
+
+      var availableAirportIds = this.airports.filter(function (airport) {
+        return airport.id === _this.originId;
+      })[0].departure_flights.map(function (flight) {
+        return flight["arrival_airport_id"];
+      });
+      console.log(availableAirportIds);
       return this.airports.filter(function (airport) {
-        return airport.id !== _this.originId;
+        return availableAirportIds.includes(airport.id);
       });
     }
   }
@@ -37693,6 +37705,11 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("p", [
+      _vm._v("With "),
+      _c("b", [_vm._v(_vm._s(_vm.flight.airline.name))])
+    ]),
+    _vm._v(" "),
     _c("table", [
       _c("tr", [
         _c("td", [_vm._v(_vm._s(_vm.flight.departure_date))]),

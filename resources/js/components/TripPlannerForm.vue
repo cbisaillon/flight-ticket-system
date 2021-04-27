@@ -69,11 +69,27 @@ export default {
   },
   computed: {
     origins: function() {
-      return this.airports;
+      return this.airports.filter((airport) => {
+        return airport.departure_flights.length > 0
+      });
     },
     destinations: function() {
-      // Can't fly from and to the same airport !!
-      return this.airports.filter((airport) => airport.id !== this.originId)
+      if (!this.originId) {
+        return [];
+      }
+
+      let availableAirportIds =
+          this.airports
+              .filter((airport) => airport.id === this.originId)[0]
+              .departure_flights.map((flight) => {
+                return flight["arrival_airport_id"];
+              })
+
+      console.log(availableAirportIds);
+
+      return this.airports.filter((airport) => {
+        return availableAirportIds.includes(airport.id);
+      })
     }
   }
 }

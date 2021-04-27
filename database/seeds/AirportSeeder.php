@@ -6,42 +6,32 @@ use Illuminate\Support\Facades\DB;
 class AirportSeeder extends Seeder
 {
     /**
-     * @var array
-     */
-    private $airports = [
-      [
-          "code" => "YUL",
-          "city_code" => "YMQ",
-          "name" => "Pierre Elliott Trudeau International",
-          "city" => "Montreal",
-          "country_code" => "CA",
-          "region_code" => "QC",
-          "latitude" => 45.457714,
-          "longitude" => -73.749908,
-          "timezone" => "America/Montreal"
-      ],
-      [
-          "code" => "YVR",
-          "city_code" => "YVR",
-          "name" => "Vancouver International",
-          "city" => "Vancouver",
-          "country_code" => "CA",
-          "region_code" => "BC",
-          "latitude" => 49.194698,
-          "longitude" => -123.179192,
-          "timezone" => "America/Vancouver"
-      ]
-    ];
-
-    /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        foreach ($this->airports as $airport) {
-            DB::table("airports")->insert($airport);
+        $faker = \Faker\Factory::create();
+
+        $airport_json = json_decode(
+            file_get_contents("https://raw.githubusercontent.com/algolia/datasets/master/airports/airports.json"),
+            true
+        );
+
+        foreach ($airport_json as $json) {
+            DB::table("airports")->insert([
+                "code" => $json["iata_code"],
+                "city_code" => $json["city"],
+                "name" => $json["name"],
+                "city" => $json["city"],
+                "country_code" => $json["country"],
+                "region_code" => $json["iata_code"],
+                "latitude" => $json["_geoloc"]["lat"],
+                "longitude" => $json["_geoloc"]["lng"],
+                "timezone" => $faker->timezone
+            ]);
         }
+
     }
 }

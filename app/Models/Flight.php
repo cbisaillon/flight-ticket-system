@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Flight extends Model
 {
+    public function airline(){
+        return $this->belongsTo(Airline::class);
+    }
+
     public function departureAirport(){
         return $this->belongsTo(Airport::class, "departure_airport_id");
     }

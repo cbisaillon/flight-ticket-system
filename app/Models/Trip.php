@@ -15,6 +15,10 @@ class Trip extends Model
         "total_cost"
     ];
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
     public function flights() {
         return $this->belongsToMany(
             Flight::class,

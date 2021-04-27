@@ -12,9 +12,16 @@ class AirlineSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("airlines")->insert([
-            "code" => "AC",
-            "name" => "Air Canada"
-        ]);
+        $airline_json = json_decode(
+            file_get_contents("https://raw.githubusercontent.com/npow/airline-codes/master/airlines.json"),
+            true
+        );
+
+        foreach ($airline_json as $json) {
+            DB::table("airlines")->insert([
+                "code" => $json["icao"],
+                "name" => $json["name"]
+            ]);
+        }
     }
 }
