@@ -64,7 +64,6 @@ class SearchResultHelper
         $flightsDeparture = Flight::query()
             ->where("departure_airport_id", $this->from->id)
             ->where("arrival_airport_id", $this->to->id)
-            ->orderBy("price", "ASC")
             ->get();
 
         // Find possible returns
@@ -73,7 +72,6 @@ class SearchResultHelper
             $flightsReturn = Flight::query()
                 ->where("departure_airport_id", $this->to->id)
                 ->where("arrival_airport_id", $this->from->id)
-                ->orderBy("price", "ASC")
                 ->get();
         }
 
@@ -119,6 +117,10 @@ class SearchResultHelper
                 }
             }
         }
+
+        usort($results, function($item1, $item2) {
+            return $item1["total_cost"] > $item2["total_cost"];
+        });
 
         return $results;
     }
