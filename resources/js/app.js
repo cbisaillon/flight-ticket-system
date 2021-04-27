@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('TripPlannerForm', require('./components/TripPlannerForm.vue').default);
 Vue.component('FlightDescription', require('./components/FlightDescription.vue').default);
+Vue.component('ToastMessage', require('./components/ToastMessage.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

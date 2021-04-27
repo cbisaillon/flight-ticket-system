@@ -21,6 +21,10 @@
 </head>
 <body>
     <div id="app">
+        @if(\Illuminate\Support\Facades\Session::has('error'))
+            <toast-message message="{{\Illuminate\Support\Facades\Session::get("error")}}"></toast-message>
+        @endif
+
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">

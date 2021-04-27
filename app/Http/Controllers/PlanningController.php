@@ -56,6 +56,16 @@ class PlanningController extends Controller
 
         $departureDate = Carbon::parse($request->get("departure_date"));
 
+        if ($departureDate->diffInDays(Carbon::now()) > 365) {
+            Session::flash("error", "Can't start trip after 365 days !");
+            return redirect()->back();
+        }
+
+        if ($departureDate->lessThan(Carbon::now())) {
+            Session::flash("error", "Departure date must be greater than now !");
+            return redirect()->back();
+        }
+
         $returnDate = null;
         if ($request->has("return_date") && !empty($request->get("return_date"))) {
             $returnDate = Carbon::parse($request->get("return_date"));
