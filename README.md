@@ -16,6 +16,10 @@ In this project, I am doing a flight ticket system.
 
 ## Testing
 
+You can test the application here:
+
+[https://flighthub.cbisaillon.ca/]()
+
 ### Users
 
 |email| password |
